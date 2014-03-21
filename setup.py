@@ -14,7 +14,7 @@ tests_require = [
 
 setup(name='ftw.maintenanceserver',
       version=version,
-      description='',
+      description='Maintenance HTTP server, serving a static directory.',
 
       long_description=open('README.rst').read() + '\n' + \
           open(os.path.join('docs', 'HISTORY.txt')).read(),
