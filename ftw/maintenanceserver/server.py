@@ -2,7 +2,18 @@ from SimpleHTTPServer import SimpleHTTPRequestHandler
 import SocketServer
 import os
 import posixpath
+import re
 import urllib
+
+
+def remove_virtual_host_monster_config(path):
+    if 'VirtualHostBase' not in path.split('/'):
+        return path
+
+    path = re.sub(r'^\/VirtualHostBase\/.*\/VirtualHostRoot', r'', path)
+    while path.startswith('/_vh_'):
+        path = re.sub(r'/(_vh_[^/]+)/', '/', path)
+    return path
 
 
 class HTTPRequestHandler(SimpleHTTPRequestHandler):
@@ -15,6 +26,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         self.end_headers()
 
     def translate_path(self, path):
+        path = remove_virtual_host_monster_config(path)
         # abandon query parameters
         path = path.split('?',1)[0]
         path = path.split('#',1)[0]

@@ -73,3 +73,17 @@ class TestServer(TestCase):
         self.assertEquals(200, browser.response.status_code)
         self.assertEquals('GET,HEAD,POST,OPTIONS',
                           browser.response.headers.get('Allow'))
+
+    @browsing
+    @catch_stderr
+    def test_virtualHostMonster_configuration_is_removed(self, browser):
+        self.open('VirtualHostBase/http/localhost:8080/mountpoint/'
+                  'Plone/VirtualHostRoot/images/logo.png')
+        self.assertEquals('TheLogo', browser.contents.strip())
+
+    @browsing
+    @catch_stderr
+    def test_virtualHostMonster_inside_out_urls(self, browser):
+        self.open('VirtualHostBase/http/localhost:8080/mountpoint/'
+                  'Plone/VirtualHostRoot/_vh_the/_vh_site/images/logo.png')
+        self.assertEquals('TheLogo', browser.contents.strip())
