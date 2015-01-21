@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0.2 (unreleased)
+1.0.2 (2015-01-21)
 ------------------
 
 - Fix broken pipe error when connections are closed early by the client.
