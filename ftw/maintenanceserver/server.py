@@ -3,6 +3,7 @@ import SocketServer
 import os
 import posixpath
 import re
+import socket
 import urllib
 
 
@@ -17,6 +18,23 @@ def remove_virtual_host_monster_config(path):
 
 
 class HTTPRequestHandler(SimpleHTTPRequestHandler):
+
+    def __init__(self, request, client_address, server):
+        self.request = request
+        self.client_address = client_address
+        self.server = server
+        self.setup()
+
+        # Do not finish() when we have a broken pipe.
+        try:
+            self.handle()
+        except socket.error:
+            pass  # broken pipe
+        except:
+            self.finish()
+            raise
+        else:
+            self.finish()
 
     do_POST = SimpleHTTPRequestHandler.do_GET
 
