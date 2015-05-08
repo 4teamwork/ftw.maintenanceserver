@@ -49,9 +49,9 @@ which will only be used when all "normal" servers are offline::
 Links
 =====
 
-- github project: https://github.com/4teamwork/ftw.maintenanceserver
-- Issue tracker: https://github.com/4teamwork/ftw.maintenanceserver/issues
-- Package on pypi: http://pypi.python.org/pypi/ftw.maintenanceserver
+- Github: https://github.com/4teamwork/ftw.maintenanceserver
+- Issues: https://github.com/4teamwork/ftw.maintenanceserver/issues
+- Pypi: http://pypi.python.org/pypi/ftw.maintenanceserver
 - Continuous integration: https://jenkins.4teamwork.ch/search?q=ftw.maintenanceserver
 
 
