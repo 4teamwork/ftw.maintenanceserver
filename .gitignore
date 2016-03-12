@@ -14,3 +14,6 @@ eggs/
 parts/
 src/
 var/
+.Python
+include/
+lib/

@@ -5,13 +5,13 @@ import os
 
 
 DOCUMENT_ROOT = os.path.join(os.path.dirname(__file__), 'tests', 'htdocs')
+ADDRESS = 'localhost'
 PORT = int(os.environ.get('ZSERVER_PORT', 55001))
-
 
 class ServerLayer(Layer):
 
     def setUp(self):
-        self.httpd = HTTPServer(DOCUMENT_ROOT, PORT)
+        self.httpd = HTTPServer(DOCUMENT_ROOT, ADDRESS, PORT)
         self.thread = Thread(target=self.httpd.serve_forever)
         self.thread.start()
         self['URL'] = 'http://localhost:%i/' % PORT

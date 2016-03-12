@@ -70,11 +70,11 @@ class HTTPServer(SocketServer.TCPServer):
 
     allow_reuse_address = True
 
-    def __init__(self, document_root, port):
+    def __init__(self, document_root, address, port):
         self.document_root = document_root
         SocketServer.TCPServer.__init__(
-            self, ('localhost', port), HTTPRequestHandler)
+            self, (address, port), HTTPRequestHandler)
 
 
-def command(document_root, port):
-    HTTPServer(document_root, port).serve_forever()
+def command(document_root, port, address='localhost'):
+    HTTPServer(document_root, address, port).serve_forever()
