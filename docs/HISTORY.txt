@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0.3 (unreleased)
+1.1.0 (2016-03-12)
 ------------------
 
 - Allow setting a different listening address as optional parameter. Default is still localhost. pass an empty string to listen to all addresses on a host.
