@@ -61,18 +61,41 @@ class TestServer(TestCase):
     @browsing
     @catch_stderr
     def test_HEAD_request(self, browser):
+        # Respond to HEAD with 503 so that it is not cached.
         self.open('', method='HEAD')
-        self.assertEquals(200, browser.response.status_code)
+        self.assertEquals(503, browser.response.status_code)
         self.assertEquals('text/html',
                           browser.response.headers.get('Content-Type'))
 
     @browsing
     @catch_stderr
     def test_OPTIONS_request(self, browser):
+        # Options must be answered with 200 OK, otherwise HaProxy would
+        # take the backend offline.
+        # But since we want Varnish not to cache it, no matter how it is
+        # configured, we set a cache-control header.
         self.open('', method='OPTIONS')
         self.assertEquals(200, browser.response.status_code)
         self.assertEquals('GET,HEAD,POST,OPTIONS',
                           browser.response.headers.get('Allow'))
+        self.assertEquals('no-cache',
+                          browser.response.headers.get('Cache-Control'))
+
+    @browsing
+    @catch_stderr
+    def test_GET_responded_with_503(self, browser):
+        # Respond to GET with 503 so that it is not cached.
+        self.open('', method='GET')
+        self.assertEquals(503, browser.response.status_code)
+        self.assertEquals('Service Unavailable', browser.response.reason)
+
+    @browsing
+    @catch_stderr
+    def test_POST_responded_with_503(self, browser):
+        # Respond to POST with 503 so that it is not cached.
+        self.open('', method='POST')
+        self.assertEquals(503, browser.response.status_code)
+        self.assertEquals('Service Unavailable', browser.response.reason)
 
     @browsing
     @catch_stderr

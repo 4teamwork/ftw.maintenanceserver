@@ -39,9 +39,19 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
     do_POST = SimpleHTTPRequestHandler.do_GET
 
     def do_OPTIONS(self):
-        self.send_response(200)
+        self.send_response(200, method='OPTIONS')
         self.send_header('Allow', 'GET,HEAD,POST,OPTIONS')
+        self.send_header('Cache-Control', 'no-cache')
         self.end_headers()
+
+    def send_response(self, code, message=None, method=None):
+        # Always send "503 Service Unavailable" instead of "200 OK" so that
+        # caching proxies do not cache maintenance server responses.
+        if code == 200 and method != 'OPTIONS':
+            code = 503
+            message = None
+
+        return SimpleHTTPRequestHandler.send_response(self, code, message)
 
     def translate_path(self, path):
         path = remove_virtual_host_monster_config(path)
