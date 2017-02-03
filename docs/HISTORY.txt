@@ -5,7 +5,7 @@ Changelog
 1.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Avoid caching maintenance server responses. [jone]
 
 
 1.1.0 (2016-03-12)
