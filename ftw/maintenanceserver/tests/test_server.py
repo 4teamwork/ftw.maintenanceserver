@@ -63,7 +63,7 @@ class TestServer(TestCase):
     def test_HEAD_request(self, browser):
         # Respond to HEAD with 503 so that it is not cached.
         self.open('', method='HEAD')
-        self.assertEquals(503, browser.response.status_code)
+        self.assertEquals(503, browser.status_code)
         self.assertEquals('text/html',
                           browser.response.headers.get('Content-Type'))
 
@@ -75,7 +75,7 @@ class TestServer(TestCase):
         # But since we want Varnish not to cache it, no matter how it is
         # configured, we set a cache-control header.
         self.open('', method='OPTIONS')
-        self.assertEquals(200, browser.response.status_code)
+        self.assertEquals(200, browser.status_code)
         self.assertEquals('GET,HEAD,POST,OPTIONS',
                           browser.response.headers.get('Allow'))
         self.assertEquals('no-cache',
@@ -86,7 +86,7 @@ class TestServer(TestCase):
     def test_GET_responded_with_503(self, browser):
         # Respond to GET with 503 so that it is not cached.
         self.open('', method='GET')
-        self.assertEquals(503, browser.response.status_code)
+        self.assertEquals(503, browser.status_code)
         self.assertEquals('Service Unavailable', browser.response.reason)
 
     @browsing
@@ -94,7 +94,7 @@ class TestServer(TestCase):
     def test_POST_responded_with_503(self, browser):
         # Respond to POST with 503 so that it is not cached.
         self.open('', method='POST')
-        self.assertEquals(503, browser.response.status_code)
+        self.assertEquals(503, browser.status_code)
         self.assertEquals('Service Unavailable', browser.response.reason)
 
     @browsing
