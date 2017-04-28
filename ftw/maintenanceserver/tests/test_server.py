@@ -65,7 +65,7 @@ class TestServer(TestCase):
         self.open('', method='HEAD')
         self.assertEquals(503, browser.status_code)
         self.assertEquals('text/html',
-                          browser.response.headers.get('Content-Type'))
+                          browser.headers.get('Content-Type'))
 
     @browsing
     @catch_stderr
@@ -77,9 +77,9 @@ class TestServer(TestCase):
         self.open('', method='OPTIONS')
         self.assertEquals(200, browser.status_code)
         self.assertEquals('GET,HEAD,POST,OPTIONS',
-                          browser.response.headers.get('Allow'))
+                          browser.headers.get('Allow'))
         self.assertEquals('no-cache',
-                          browser.response.headers.get('Cache-Control'))
+                          browser.headers.get('Cache-Control'))
 
     @browsing
     @catch_stderr
@@ -87,7 +87,7 @@ class TestServer(TestCase):
         # Respond to GET with 503 so that it is not cached.
         self.open('', method='GET')
         self.assertEquals(503, browser.status_code)
-        self.assertEquals('Service Unavailable', browser.response.reason)
+        self.assertEquals('Service Unavailable', browser.status_reason)
 
     @browsing
     @catch_stderr
@@ -95,7 +95,7 @@ class TestServer(TestCase):
         # Respond to POST with 503 so that it is not cached.
         self.open('', method='POST')
         self.assertEquals(503, browser.status_code)
-        self.assertEquals('Service Unavailable', browser.response.reason)
+        self.assertEquals('Service Unavailable', browser.status_reason)
 
     @browsing
     @catch_stderr
