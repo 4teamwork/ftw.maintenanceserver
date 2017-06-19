@@ -5,7 +5,7 @@ Changelog
 1.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix tests to be compatible with most recent ftw.testbrowser. [lgraf]
 
 
 1.1.1 (2017-02-03)

@@ -1,7 +1,7 @@
-from StringIO import StringIO
 from ftw.maintenanceserver.testing import SERVER_LAYER
 from ftw.testbrowser import browser
 from ftw.testbrowser import browsing
+from StringIO import StringIO
 from unittest2 import TestCase
 import os.path
 import sys
@@ -26,7 +26,12 @@ class TestServer(TestCase):
 
     def open(self, path, method='GET'):
         url = os.path.join(self.layer['URL'], path)
-        browser.webdav(method, url)
+        browser.open(url, method=method)
+
+    def setUp(self):
+        # We actually *expect* the maintenance server to produce
+        # "HTTP Errors", such as "503 Service Unavailable"
+        browser.raise_http_errors = False
 
     @browsing
     @catch_stderr
