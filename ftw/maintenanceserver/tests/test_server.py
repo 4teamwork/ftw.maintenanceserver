@@ -28,6 +28,11 @@ class TestServer(TestCase):
         url = os.path.join(self.layer['URL'], path)
         browser.open(url, method=method)
 
+    def setUp(self):
+        # We actually *expect* the maintenance server to produce
+        # "HTTP Errors", such as "503 Service Unavailable"
+        browser.raise_http_errors = False
+
     @browsing
     @catch_stderr
     def test_server_serves_index_html(self, browser):
