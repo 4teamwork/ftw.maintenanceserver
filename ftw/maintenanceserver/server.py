@@ -45,9 +45,10 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         self.end_headers()
 
     def send_response(self, code, message=None, method=None):
-        # Always send "503 Service Unavailable" instead of "200 OK" so that
-        # caching proxies do not cache maintenance server responses.
-        if code == 200 and method != 'OPTIONS':
+        # Send "503 Service Unavailable" instead of "200 OK" so that
+        # caching proxies do not cache maintenance server responses,
+        # except to resources request.
+        if code == 200 and method != 'OPTIONS' and not self.is_resource:
             code = 503
             message = None
 
@@ -67,12 +68,15 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         filepath = os.path.abspath(os.path.join(document_root, *words))
 
         if not os.path.isfile(filepath):
+            self.is_resource = False
             return index
 
         elif not filepath.startswith(document_root):
+            self.is_resource = False
             return index
 
         else:
+            self.is_resource = True
             return filepath
 
 

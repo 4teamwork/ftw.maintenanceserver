@@ -5,6 +5,7 @@ Changelog
 1.1.2 (unreleased)
 ------------------
 
+- Respond with 200 OK to resources request. [njohner]
 - Fix tests to be compatible with most recent ftw.testbrowser. [lgraf]
 
 

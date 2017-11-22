@@ -115,3 +115,9 @@ class TestServer(TestCase):
         self.open('VirtualHostBase/http/localhost:8080/mountpoint/'
                   'Plone/VirtualHostRoot/_vh_the/_vh_site/images/logo.png')
         self.assertEquals('TheLogo', browser.contents.strip())
+
+    @browsing
+    @catch_stderr
+    def test_resources_get_200(self, browser):
+        self.open('images/logo.png')
+        self.assertEquals(200, browser.status_code)
