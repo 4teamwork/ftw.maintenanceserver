@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.1.2 (unreleased)
+1.1.2 (2017-11-28)
 ------------------
 
 - Respond with 200 OK to resources request. [njohner]
